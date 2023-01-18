@@ -1,14 +1,15 @@
-package codeasus.projects.renaissance
+package codeasus.projects.renaissance.features.meal.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import codeasus.projects.renaissance.R
 import codeasus.projects.renaissance.databinding.RvMealItemBinding
+import codeasus.projects.renaissance.model.features.meal.Meal
 import coil.load
 import coil.transform.RoundedCornersTransformation
 
-class MealAdapter(private val context: Context, private val mealImageList: List<Meal>) :
+class MealAdapter(private val mealImageList: List<Meal>) :
     RecyclerView.Adapter<MealAdapter.MealImageViewHolder>() {
 
     inner class MealImageViewHolder(private val binding: RvMealItemBinding) :
