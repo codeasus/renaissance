@@ -8,31 +8,31 @@
     <fragment
         android:id="@+id/mealFragment"
         android:name="codeasus.projects.renaissance.features.meal.view.MealFragment"
-        android:label="fragment_meal"
-        tools:layout="@layout/fragment_meal" >
+        android:label="Meals"
+        tools:layout="@layout/fragment_meal">
         <action
-            android:id="@+id/action_mealFragment_to_mainFragment"
+            android:id="@+id/mealFragmentToMainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/contactFragment"
         android:name="codeasus.projects.renaissance.features.contanct.view.ContactFragment"
-        android:label="fragment_contact"
-        tools:layout="@layout/fragment_contact" >
+        android:label="Contacts"
+        tools:layout="@layout/fragment_contact">
         <action
-            android:id="@+id/action_contactFragment_to_mainFragment"
+            android:id="@+id/contactFragmentToMainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="codeasus.projects.renaissance.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        android:label="Main"
+        tools:layout="@layout/fragment_main">
         <action
-            android:id="@+id/action_mainFragment_to_contactFragment"
+            android:id="@+id/mainFragmentToContactFragment"
             app:destination="@id/contactFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_mealFragment"
+            android:id="@+id/mainFragmentToMealFragment"
             app:destination="@id/mealFragment" />
     </fragment>
 </navigation>

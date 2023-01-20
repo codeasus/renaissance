@@ -11,6 +11,7 @@ import codeasus.projects.renaissance.databinding.FragmentContactBinding
 class ContactFragment : Fragment() {
 
     private lateinit var mBinding: FragmentContactBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

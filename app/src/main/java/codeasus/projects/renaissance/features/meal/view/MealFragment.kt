@@ -15,9 +15,9 @@ import codeasus.projects.renaissance.model.features.meal.Meal
 class MealFragment : Fragment() {
 
     private lateinit var mBinding: FragmentMealBinding
-
     private lateinit var mRVMeal: RecyclerView
     private lateinit var mMealAdapter: MealAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -32,7 +32,7 @@ class MealFragment : Fragment() {
         return mBinding.root
     }
 
-    fun setView() {
+    private fun setView() {
         mRVMeal = mBinding.rvMeals
         mMealAdapter = MealAdapter(getMeals())
         mRVMeal.adapter = mMealAdapter
