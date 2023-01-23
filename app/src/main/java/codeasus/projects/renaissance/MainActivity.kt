@@ -15,7 +15,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
-        mNavHostFragment = supportFragmentManager.findFragmentById(mBinding.fragmentContainerView.id) as NavHostFragment
+        mNavHostFragment =
+            supportFragmentManager.findFragmentById(mBinding.fragmentContainerView.id) as NavHostFragment
         mNavController = mNavHostFragment.navController
         setContentView(mBinding.root)
     }

@@ -1,10 +1,12 @@
 package codeasus.projects.renaissance.features.meal.view
 
 import android.os.Bundle
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import codeasus.projects.renaissance.R
@@ -17,10 +19,7 @@ class MealFragment : Fragment() {
     private lateinit var mBinding: FragmentMealBinding
     private lateinit var mRVMeal: RecyclerView
     private lateinit var mMealAdapter: MealAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var mMenuHost: MenuHost
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +27,7 @@ class MealFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         mBinding = FragmentMealBinding.inflate(layoutInflater)
+        mMenuHost = requireActivity()
         setView()
         return mBinding.root
     }
@@ -37,6 +37,26 @@ class MealFragment : Fragment() {
         mMealAdapter = MealAdapter(getMeals())
         mRVMeal.adapter = mMealAdapter
         mRVMeal.layoutManager = LinearLayoutManager(requireContext())
+
+        mMenuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.meal_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.menu_meal_save -> {
+                        Toast.makeText(requireContext(), "Save meals", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+                    R.id.menu_meal_clear -> {
+                        Toast.makeText(requireContext(), "Clear cache", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun getMeals(): List<Meal> {

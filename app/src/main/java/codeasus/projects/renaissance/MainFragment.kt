@@ -1,10 +1,10 @@
 package codeasus.projects.renaissance
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import codeasus.projects.renaissance.databinding.FragmentMainBinding
@@ -21,13 +21,20 @@ class MainFragment : Fragment() {
     ): View {
         mBinding = FragmentMainBinding.inflate(layoutInflater, container, false)
         mNavController = findNavController()
+        setMenuVisibility(false)
         setView()
         return mBinding.root
     }
 
     private fun setView() {
-        mBinding.btnMealFragment.setOnClickListener {
-            mNavController.navigate(R.id.mainFragmentToMealFragment)
+        mBinding.apply {
+            btnMealFragment.setOnClickListener {
+                mNavController.navigate(R.id.mainFragmentToMealFragment)
+            }
+
+            btnContactFragment.setOnClickListener {
+                mNavController.navigate(R.id.mainFragmentToContactFragment)
+            }
         }
     }
 }

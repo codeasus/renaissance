@@ -22,6 +22,9 @@
         <action
             android:id="@+id/contactFragmentToMainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/contactFragmentToModifyContactFragment"
+            app:destination="@id/modifyContactFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -34,5 +37,14 @@
         <action
             android:id="@+id/mainFragmentToMealFragment"
             app:destination="@id/mealFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/modifyContactFragment"
+        android:name="codeasus.projects.renaissance.ModifyContactFragment"
+        android:label="Modify Contact"
+        tools:layout="@layout/fragment_modify_contact">
+        <action
+            android:id="@+id/modifyContactFragmentToContactFragment"
+            app:destination="@id/contactFragment" />
     </fragment>
 </navigation>
