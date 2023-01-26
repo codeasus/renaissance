@@ -8,79 +8,54 @@
     tools:context=".ModifyContactFragment">
 
     <com.google.android.material.textview.MaterialTextView
-        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
         android:id="@+id/iv_contact_image"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:text="@string/pseudo_contact_name_initials"
+        android:gravity="center"
+        android:textSize="42sp"
+        android:textColor="@color/white"
         android:backgroundTint="@color/purple_700"
         android:background="@drawable/bg_tv_circular"
-        app:layout_constraintBottom_toTopOf="@id/tv_contact_name"
-        app:layout_constraintStart_toStartOf="@id/tv_contact_name"
+        app:layout_constraintBottom_toTopOf="@id/tv_contact_firstname"
+        app:layout_constraintStart_toStartOf="@id/tv_contact_firstname"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_contact_name"
+        android:id="@+id/tv_contact_firstname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="2"
-        android:text="@string/pseudo_contact_name"
+        android:text="@string/pseudo_contact_firstname"
         android:textColor="@color/purple_700"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@id/ll_form_container"
-        app:layout_constraintStart_toStartOf="@id/ll_form_container"
+        app:layout_constraintBottom_toTopOf="@id/tv_contact_lastname"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_contact_image" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_contact_lastname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:text="@string/pseudo_contact_lastname"
+        android:textColor="@color/purple_700"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@id/ll_numbers_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_contact_firstname" />
+
     <LinearLayout
-        android:id="@+id/ll_form_container"
+        android:id="@+id/ll_numbers_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_contact_name">
+        app:layout_constraintTop_toBottomOf="@id/tv_contact_lastname">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_firstname"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/firstname">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_firstname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_lastname"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="18dp"
-            android:hint="@string/lastname">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_lastname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_phone_number"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/phone_number">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_phone_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
@@ -93,7 +68,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_form_container"
+        app:layout_constraintTop_toBottomOf="@id/ll_numbers_container"
         app:reverseLayout="true"
         tools:listitem="@layout/rv_meal_item_circular" />
 

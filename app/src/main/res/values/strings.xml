@@ -12,6 +12,9 @@
     <string name="firstname">Firstname</string>
     <string name="lastname">Lastname</string>
     <string name="pseudo_contact_name">Orhan Rosenfeld</string>
+    <string name="pseudo_contact_firstname">Orhan</string>
+    <string name="pseudo_contact_lastname">Rosenfeld</string>
+    <string name="pseudo_contact_name_initials">OR</string>
     <string name="phone_number">Phone Number</string>
     <string name="remove">Remove</string>
 </resources>
