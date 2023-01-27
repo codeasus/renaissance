@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
+    android:padding="6dp"
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -15,6 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/rv_meal_item" />
+        tools:listitem="@layout/rv_item_meal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

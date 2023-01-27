@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/tv_image"
+        android:id="@+id/iv_meal"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:background="@color/black"

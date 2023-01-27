@@ -39,11 +39,13 @@ class ContactFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.menu_contact_update -> {
-                        Toast.makeText(requireContext(), "Update contacts", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Update contacts", Toast.LENGTH_SHORT)
+                            .show()
                         true
                     }
                     R.id.menu_contact_clear -> {
-                        Toast.makeText(requireContext(), "Delete contacts", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Delete contacts", Toast.LENGTH_SHORT)
+                            .show()
                         true
                     }
                     else -> false

@@ -7,7 +7,7 @@
     <string name="clean">Clean</string>
     <string name="save">Save</string>
     <string name="update">Update</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="firstname">Firstname</string>
     <string name="lastname">Lastname</string>
@@ -15,6 +15,7 @@
     <string name="pseudo_contact_firstname">Orhan</string>
     <string name="pseudo_contact_lastname">Rosenfeld</string>
     <string name="pseudo_contact_name_initials">OR</string>
+    <string name="pseudo_number">+994558490252</string>
     <string name="phone_number">Phone Number</string>
     <string name="remove">Remove</string>
 </resources>

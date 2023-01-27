@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    android:padding="5dp"
+    android:padding="6dp"
     android:background="@drawable/rv_item_bg_meal">
 
     <ImageView
-        android:id="@+id/tv_image"
+        android:id="@+id/iv_meal"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:contentDescription="@string/image_description_meal"
@@ -16,15 +16,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_text"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_meal_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_image"
+        app:layout_constraintBottom_toBottomOf="@id/iv_meal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toEndOf="@id/tv_image"
-        app:layout_constraintTop_toTopOf="@id/tv_image" />
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toEndOf="@id/iv_meal"
+        app:layout_constraintTop_toTopOf="@id/iv_meal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

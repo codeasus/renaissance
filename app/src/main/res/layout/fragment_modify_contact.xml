@@ -11,42 +11,43 @@
         android:id="@+id/iv_contact_image"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:text="@string/pseudo_contact_name_initials"
-        android:gravity="center"
-        android:textSize="42sp"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/purple_700"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/bg_tv_circular"
+        android:backgroundTint="@color/purple_700"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="38sp"
         app:layout_constraintBottom_toTopOf="@id/tv_contact_firstname"
         app:layout_constraintStart_toStartOf="@id/tv_contact_firstname"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/pseudo_contact_name_initials" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_contact_firstname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="2"
-        android:text="@string/pseudo_contact_firstname"
         android:textColor="@color/purple_700"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@id/tv_contact_lastname"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_contact_image" />
+        app:layout_constraintTop_toBottomOf="@id/iv_contact_image"
+        tools:text="@string/pseudo_contact_firstname" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_contact_lastname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="2"
-        android:text="@string/pseudo_contact_lastname"
         android:textColor="@color/purple_700"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@id/ll_numbers_container"
+        app:layout_constraintBottom_toTopOf="@id/ch_numbers_group"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_contact_firstname" />
+        app:layout_constraintTop_toBottomOf="@id/tv_contact_firstname"
+        tools:text="@string/pseudo_contact_lastname" />
 
-    <LinearLayout
-        android:id="@+id/ll_numbers_container"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/ch_numbers_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -55,9 +56,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_contact_lastname">
 
+        <com.google.android.material.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/purple_700"
+            android:textSize="16sp"
+            app:chipIcon="@drawable/chip_ic_phone"
+            app:chipIconSize="18dp"
+            app:iconStartPadding="5dp"
+            tools:text="@string/pseudo_number" />
 
+        <com.google.android.material.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/purple_700"
+            android:textSize="16sp"
+            app:chipIcon="@drawable/chip_ic_phone"
+            app:chipIconSize="18dp"
+            app:iconStartPadding="5dp"
+            tools:text="@string/pseudo_number" />
 
-    </LinearLayout>
+        <com.google.android.material.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/purple_700"
+            android:textSize="16sp"
+            app:chipIcon="@drawable/chip_ic_phone"
+            app:chipIconSize="18dp"
+            app:iconStartPadding="5dp"
+            tools:text="@string/pseudo_number" />
+
+    </com.google.android.material.chip.ChipGroup>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_favorite_meals"
@@ -68,15 +97,18 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_numbers_container"
+        app:layout_constraintTop_toBottomOf="@id/ch_numbers_group"
         app:reverseLayout="true"
-        tools:listitem="@layout/rv_meal_item_circular" />
+        tools:listitem="@layout/rv_item_menu_circular" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_save"
         android:layout_width="196dp"
         android:layout_height="wrap_content"
+        android:height="64dp"
         android:text="@string/save"
+        android:textSize="18sp"
+        app:cornerRadius="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
