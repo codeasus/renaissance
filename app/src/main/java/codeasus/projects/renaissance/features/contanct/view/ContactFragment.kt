@@ -3,11 +3,12 @@ package codeasus.projects.renaissance.features.contanct.view
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -22,17 +23,23 @@ class ContactFragment : Fragment() {
     private lateinit var mBinding: FragmentContactBinding
     private lateinit var mNavController: NavController
     private lateinit var mMenuHost: MenuHost
-    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private lateinit var mRequestPermissionLauncher: ActivityResultLauncher<Array<String>>
+
+    companion object {
+        val PERMISSIONS_CONTACTS =
+            arrayOf(Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestPermissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted ->
-            if (isGranted) {
-
+        mRequestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            val allPermissionsGranted = permissions.entries.all { it.value }
+            if (allPermissionsGranted) {
+                Log.d("PERMISSION", "ALL CONTACT RELATED PERMISSION GRANTED")
             } else {
-
+                Log.w("PERMISSION", "ALL CONTACT RELATED PERMISSION DENIED")
             }
         }
     }
@@ -71,38 +78,20 @@ class ContactFragment : Fragment() {
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        checkContactPermissions(PERMISSIONS_CONTACTS)
     }
 
-    private fun hasReadContactPermission(): Boolean {
-        return ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.READ_CONTACTS
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun hasWriteContactPermission(): Boolean {
-        return ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.WRITE_CONTACTS
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun requestPermissions() {
-        val permissionsToRequest = mutableListOf<String>()
-        if (hasReadContactPermission()) {
-            permissionsToRequest.add(Manifest.permission.READ_CONTACTS)
+    private fun checkContactPermissions(permissions: Array<String>) {
+        val context = requireContext()
+        val allPermissionsGranted = permissions.all { permission ->
+            ContextCompat.checkSelfPermission(
+                context,
+                permission
+            ) == PackageManager.PERMISSION_GRANTED
         }
-        if (hasWriteContactPermission()) {
-            permissionsToRequest.add(Manifest.permission.WRITE_CONTACTS)
-        }
-
-        if (permissionsToRequest.isNotEmpty()) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                permissionsToRequest.toTypedArray(),
-                0
-            )
+        if (!allPermissionsGranted) {
+            mRequestPermissionLauncher.launch(permissions)
         }
     }
-    
 }
