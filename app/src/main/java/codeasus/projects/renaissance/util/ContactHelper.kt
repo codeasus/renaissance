@@ -1,4 +1,4 @@
-package codeasus.projects.util
+package codeasus.projects.renaissance.util
 
 import android.content.Context
 import android.database.Cursor
