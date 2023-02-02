@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/modifyContactFragment"
-        android:name="codeasus.projects.renaissance.ModifyContactFragment"
+        android:name="codeasus.projects.renaissance.features.modifycontact.view.ModifyContactFragment"
         android:label="Modify Contact"
         tools:layout="@layout/fragment_modify_contact">
         <action

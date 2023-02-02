@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import codeasus.projects.renaissance.R
 import codeasus.projects.renaissance.databinding.FragmentContactBinding
+import codeasus.projects.renaissance.util.ContactHelper
 
 class ContactFragment : Fragment() {
 
@@ -38,6 +39,8 @@ class ContactFragment : Fragment() {
             val allPermissionsGranted = permissions.entries.all { it.value }
             if (allPermissionsGranted) {
                 Log.d("PERMISSION", "ALL CONTACT RELATED PERMISSION GRANTED")
+                ContactHelper.printContactTable(requireContext())
+                ContactHelper.displayContentProviders()
             } else {
                 Log.w("PERMISSION", "ALL CONTACT RELATED PERMISSION DENIED")
             }
@@ -90,7 +93,11 @@ class ContactFragment : Fragment() {
                 permission
             ) == PackageManager.PERMISSION_GRANTED
         }
-        if (!allPermissionsGranted) {
+        if (allPermissionsGranted) {
+            ContactHelper.printContactTable(requireContext())
+            ContactHelper.displayContentProviders()
+            ContactHelper.a(requireContext())
+        } else {
             mRequestPermissionLauncher.launch(permissions)
         }
     }
