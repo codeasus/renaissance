@@ -39,8 +39,6 @@ class ContactFragment : Fragment() {
             val allPermissionsGranted = permissions.entries.all { it.value }
             if (allPermissionsGranted) {
                 Log.d("PERMISSION", "ALL CONTACT RELATED PERMISSION GRANTED")
-                ContactHelper.printContactTable(requireContext())
-                ContactHelper.displayContentProviders()
             } else {
                 Log.w("PERMISSION", "ALL CONTACT RELATED PERMISSION DENIED")
             }
@@ -94,11 +92,16 @@ class ContactFragment : Fragment() {
             ) == PackageManager.PERMISSION_GRANTED
         }
         if (allPermissionsGranted) {
-            ContactHelper.printContactTable(requireContext())
-            ContactHelper.displayContentProviders()
-            ContactHelper.a(requireContext())
+            executeOnContactsPermissionGranted()
         } else {
             mRequestPermissionLauncher.launch(permissions)
         }
+    }
+
+    private fun executeOnContactsPermissionGranted() {
+//        ContactHelper.printContactTable(requireContext())
+//        ContactHelper.displayContactContentProviders()
+//        ContactHelper.a(requireContext())
+        ContactHelper.b(requireContext())
     }
 }

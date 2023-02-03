@@ -7,6 +7,7 @@ import android.provider.ContactsContract
 import android.util.Log
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
+import java.util.Date
 
 object ContactHelper {
 
@@ -32,7 +33,6 @@ object ContactHelper {
         }
     }
 
-
     fun printContactTable(context: Context) {
         val uri = ContactsContract.Data.CONTENT_URI
         val projections = arrayOf(
@@ -46,8 +46,43 @@ object ContactHelper {
         cursor?.close()
     }
 
-    fun addContacts() {
+    fun b(context: Context) {
+        var cursor: Cursor? = null
+        val contentProvider = ContactsContract.Contacts.CONTENT_URI
 
+        try {
+            cursor = context.contentResolver.query(
+                contentProvider,
+                null,
+                "${ContactsContract.Contacts.DISPLAY_NAME_PRIMARY} = ?",
+                arrayOf("Aygun Test"),
+                null
+            )
+            val lookUpKeyColumnIndex =
+                cursor?.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY)!!
+            val nameRawContactIDColumnIndex =
+                cursor.getColumnIndex(ContactsContract.Contacts.NAME_RAW_CONTACT_ID)
+            val displayNamePrimaryColumnIndex =
+                cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+            val displayNameColumnIndex =
+                cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+            val contactLastUpdatedTimestampColumnIndex =
+                cursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP)
+
+            while (cursor.moveToNext()) {
+                val a = cursor.getString(lookUpKeyColumnIndex)
+                val b = cursor.getString(nameRawContactIDColumnIndex)
+                val c = cursor.getString(displayNamePrimaryColumnIndex)
+                val d = cursor.getString(displayNameColumnIndex)
+                val e = cursor.getLong(contactLastUpdatedTimestampColumnIndex)
+
+                Log.v("B_FUNC -> ", "a: $a; b: $b; c: $c; d: $d; e: ${Date(e)};")
+            }
+            Log.i("B_FUNC", cursor?.columnNames.contentToString())
+        } catch (e: Exception) {
+            Log.v("B_FUNC", e.message.toString())
+        }
+        cursor?.close()
     }
 
     fun a(context: Context) {
@@ -56,30 +91,29 @@ object ContactHelper {
         try {
             cursor = context.contentResolver.query(
                 contentProvider,
-                arrayOf(ContactsContract.CommonDataKinds.Phone., ContactsContract.CommonDataKinds.Phone.NUMBER),
+                arrayOf(
+                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                    ContactsContract.CommonDataKinds.Phone.NUMBER
+                ),
                 null,
                 null,
                 null
             )
             while (cursor != null && cursor.moveToNext()) {
-
                 val a = cursor.getString(0)
                 val b = cursor.getString(1)
-//                val c = cursor.getString(2)
-//                val d = cursor.getString(3)
-//                val e = cursor.getString(4)
-                Log.d("COLS_$TAG", cursor.columnNames.contentToString())
+                Log.v("A_FUNC", cursor.columnNames.contentToString())
 
-                Log.d("C_$TAG", "$a $b")
+                Log.v("A_FUNC", "$a $b")
             }
         } catch (e: java.lang.Exception) {
-            Log.e(TAG, e.message.toString())
+            Log.v("A_FUNC", e.message.toString())
         } finally {
             cursor?.close()
         }
     }
 
-    fun displayContentProviders() {
+    fun displayContactContentProviders() {
         val one = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
         val two = ContactsContract.RawContacts.CONTENT_URI
         val three = ContactsContract.RawContactsEntity.CONTENT_URI
