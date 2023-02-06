@@ -18,4 +18,7 @@
     <string name="pseudo_number">+994558490252</string>
     <string name="phone_number">Phone Number</string>
     <string name="remove">Remove</string>
+    <string name="last_seen">Son görünmə</string>
+    <string name="yesterday">dünən</string>
+    <string name="today">bugün</string>
 </resources>

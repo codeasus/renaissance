@@ -1,6 +1,6 @@
 package codeasus.projects.renaissance.playground
 
-import android.provider.ContactsContract
+import codeasus.projects.renaissance.util.formatAsLastSeen
 import java.util.*
 
 const val PLAIN_FIRST_NAMES =

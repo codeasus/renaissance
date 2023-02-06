@@ -100,7 +100,6 @@ class ContactFragment : Fragment() {
 
     private fun executeOnContactsPermissionGranted() {
 //        ContactHelper.printContactTable(requireContext())
-//        ContactHelper.displayContactContentProviders()
 //        ContactHelper.a(requireContext())
         ContactHelper.b(requireContext())
     }

@@ -1,6 +1,9 @@
 package codeasus.projects.renaissance
 
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +11,21 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import codeasus.projects.renaissance.databinding.FragmentMainBinding
+import codeasus.projects.renaissance.util.DateTimePatterns
+import codeasus.projects.renaissance.util.formatAsLastSeen
+import codeasus.projects.renaissance.util.isThisWeek
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainFragment : Fragment() {
 
     private lateinit var mBinding: FragmentMainBinding
     private lateinit var mNavController: NavController
+
+
+    companion object {
+        const val TAG = "MainFragment"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +48,32 @@ class MainFragment : Fragment() {
             btnContactFragment.setOnClickListener {
                 mNavController.navigate(R.id.mainFragmentToContactFragment)
             }
+        }
+
+        val dateTimeArray: Array<Long> = arrayOf(
+            1675681429,
+            1675611429,
+            1675601429,
+            1675581412,
+            1675541429,
+            1675511765,
+            1675451765,
+            1675242765,
+            1675212765,
+            1675111765,
+            1675011765,
+            1674900065,
+            1674800065,
+            1674400065,
+            1671684392
+        )
+
+
+        for (i in dateTimeArray) {
+            Log.d(
+                TAG,
+                "Formatted datetime: ${Date((i * 1000)).formatAsLastSeen(requireContext())}"
+            )
         }
     }
 }
