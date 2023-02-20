@@ -1,6 +1,6 @@
 package codeasus.projects.renaissance.playground
 
-import codeasus.projects.renaissance.util.formatAsLastSeen
+import codeasus.projects.renaissance.data.entity.Contact
 import java.util.*
 
 const val PLAIN_FIRST_NAMES =
@@ -16,13 +16,13 @@ fun getLastNames(): Set<String> {
     return PLAIN_LAST_NAMES.split(" ").toSet()
 }
 
-fun generateRandomPhoneNumbers(count: Int): Set<String> {
+fun generatePhoneNumbers(count: Int): Set<String> {
     val random = Random()
     val phoneNumbers = mutableSetOf<String>()
 
     for (i in 0..count) {
         val num1 = (random.nextInt(7) + 1) * 100 + random.nextInt(8) * 10 + random.nextInt(8)
-        val num2 = random.nextInt(743)
+        val num2 = random.nextInt(999)
         val num3 = random.nextInt(10000)
         phoneNumbers.add("+$num1$num2$num3")
     }
@@ -31,7 +31,11 @@ fun generateRandomPhoneNumbers(count: Int): Set<String> {
 }
 
 fun main() {
-    val firstNames = getFirstNames().toMutableList().shuffled().take(100)
-    var lastNames = getLastNames().toMutableList().shuffled().take(50)
-    print(generateRandomPhoneNumbers(50))
+//    val firstNames = getFirstNames().toMutableList().shuffled().take(100)
+//    var lastNames = getLastNames().toMutableList().shuffled().take(50)
+//    print(generatePhoneNumbers(50))
+
+//    val c1 = Contact(0, "JNKN23324", "Orhan Rosenfeld", "+994558490252")
+//    val c2 = Contact(0, "JNKN23324", "Orhan Rosenfeld", "+994558490252")
+//    print(c1 == c2)
 }

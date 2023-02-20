@@ -1,9 +1,6 @@
 package codeasus.projects.renaissance
 
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import codeasus.projects.renaissance.databinding.FragmentMainBinding
-import codeasus.projects.renaissance.util.DateTimePatterns
-import codeasus.projects.renaissance.util.formatAsLastSeen
-import codeasus.projects.renaissance.util.isThisWeek
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainFragment : Fragment() {
 
@@ -68,12 +60,11 @@ class MainFragment : Fragment() {
             1671684392
         )
 
-
-        for (i in dateTimeArray) {
-            Log.d(
-                TAG,
-                "Formatted datetime: ${Date((i * 1000)).formatAsLastSeen(requireContext())}"
-            )
-        }
+//        for (i in dateTimeArray) {
+//            Log.d(
+//                TAG,
+//                "Formatted datetime: ${Date((i * 1000)).formatAsLastSeen(requireContext())}"
+//            )
+//        }
     }
 }

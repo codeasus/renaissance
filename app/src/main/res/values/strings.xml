@@ -21,4 +21,6 @@
     <string name="last_seen">Son görünmə</string>
     <string name="yesterday">dünən</string>
     <string name="today">bugün</string>
+    <string name="delete">delete</string>
+    <string name="identifier">Identifier</string>
 </resources>

@@ -4,13 +4,25 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import codeasus.projects.renaissance.data.dao.CDiffDAO
-import codeasus.projects.renaissance.data.entity.CDiff
+import codeasus.projects.renaissance.data.dao.ContactDAO
+import codeasus.projects.renaissance.data.entity.CHash
+import codeasus.projects.renaissance.data.entity.Contact
+import codeasus.projects.renaissance.data.entity.RawContact
+import codeasus.projects.renaissance.data.entity.TContact
 
-@Database(entities = [CDiff::class], version = 1, exportSchema = false)
+@Database(
+    entities = [
+        CHash::class,
+        Contact::class,
+        TContact::class,
+        RawContact::class
+    ],
+    version = 5,
+    exportSchema = false
+)
 abstract class ContactDatabase : RoomDatabase() {
 
-    abstract fun cDiffDAO(): CDiffDAO
+    abstract fun contactDAO(): ContactDAO
 
     companion object {
 
