@@ -6,7 +6,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import codeasus.projects.renaissance.data.db.ContactDatabase
 import codeasus.projects.renaissance.data.repository.ContactRepository
-import codeasus.projects.renaissance.util.ContactHelper
 
 class ContactSynchronizationWorker(
     private val ctx: Context,
@@ -26,19 +25,6 @@ class ContactSynchronizationWorker(
     }
 
     override suspend fun doWork(): Result {
-        val localContacts = ContactHelper.getLocalContactsDetailed(ctx)
-
-        localContacts.forEach {
-            Log.d(TAG, it.toString())
-        }
-
-        contactRepository.insertTContactWithRawContacts(localContacts)
-
-        val allPhoneNumbers = localContacts.flatMap {
-            it.phoneNumbers
-        }.toSet()
-
-        Log.i(TAG, allPhoneNumbers.toString())
 
         return Result.success()
     }

@@ -14,9 +14,8 @@ class MainFragment : Fragment() {
     private lateinit var mBinding: FragmentMainBinding
     private lateinit var mNavController: NavController
 
-
     companion object {
-        const val TAG = "MainFragment"
+        private val TAG = MainFragment::class.java.name
     }
 
     override fun onCreateView(
@@ -33,7 +32,7 @@ class MainFragment : Fragment() {
 
     private fun setView() {
         mBinding.apply {
-            btnMealFragment.setOnClickListener {
+            btnCocktailFragment.setOnClickListener {
                 mNavController.navigate(R.id.mainFragmentToMealFragment)
             }
 
@@ -41,30 +40,5 @@ class MainFragment : Fragment() {
                 mNavController.navigate(R.id.mainFragmentToContactFragment)
             }
         }
-
-        val dateTimeArray: Array<Long> = arrayOf(
-            1675681429,
-            1675611429,
-            1675601429,
-            1675581412,
-            1675541429,
-            1675511765,
-            1675451765,
-            1675242765,
-            1675212765,
-            1675111765,
-            1675011765,
-            1674900065,
-            1674800065,
-            1674400065,
-            1671684392
-        )
-
-//        for (i in dateTimeArray) {
-//            Log.d(
-//                TAG,
-//                "Formatted datetime: ${Date((i * 1000)).formatAsLastSeen(requireContext())}"
-//            )
-//        }
     }
 }

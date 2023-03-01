@@ -1,8 +1,8 @@
 package codeasus.projects.renaissance.data.dao
 
 import androidx.room.*
-import codeasus.projects.renaissance.data.entity.CHash
 import codeasus.projects.renaissance.data.entity.Contact
+import codeasus.projects.renaissance.data.entity.ContactHash
 import codeasus.projects.renaissance.data.entity.RawContact
 import codeasus.projects.renaissance.data.entity.TContact
 import codeasus.projects.renaissance.data.relationship.TContactWithRawContacts
@@ -12,7 +12,7 @@ import codeasus.projects.renaissance.util.ContactHelper
 interface ContactDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCHash(cHash: CHash): Long
+    suspend fun insertContactHash(contactHash: ContactHash): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertContact(contact: Contact): Long
@@ -39,7 +39,7 @@ interface ContactDAO {
     }
 
     @Transaction
-    suspend fun insertTContactsWithRawContacts(tContactsWithRawContacts: List<ContactHelper.TContact>) {
+    suspend fun insertTContactsWithRawContacts(tContactsWithRawContacts: List<ContactHelper.BufferContact>) {
         val tContactIDList = insertTContactsInBulk(
             tContactsWithRawContacts.map {
                 TContact(
@@ -63,7 +63,7 @@ interface ContactDAO {
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCHashesInBulk(cHashes: List<CHash>)
+    suspend fun insertContactHashesInBulk(contactHashes: List<ContactHash>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertContactsInBulk(contacts: List<Contact>)
@@ -71,11 +71,11 @@ interface ContactDAO {
     @Query("DELETE FROM t_contact WHERE t_contact_id = :tContactID")
     suspend fun deleteTContactByID(tContactID: Long)
 
-    @Query("SELECT COUNT(lookup_key) FROM c_hash")
-    suspend fun getCHashesCount(): Long
+    @Query("SELECT COUNT(lookup_key) FROM contact_hash")
+    suspend fun getContactHashesCount(): Long
 
-    @Query("SELECT * FROM c_hash")
-    fun readAllCHashes(): List<CHash>
+    @Query("SELECT * FROM contact_hash")
+    fun readAllContactHashes(): List<ContactHash>
 
     @Query("SELECT * FROM contact")
     fun readAllContacts(): List<Contact>

@@ -3,7 +3,7 @@
     <string name="image_description_meal">Meal Image</string>
     <string name="fragment_main">Main Fragment</string>
     <string name="fragment_contact">Contact Fragment</string>
-    <string name="fragment_meal">Meal Fragment</string>
+    <string name="fragment_cocktail">Cocktail Fragment</string>
     <string name="clean">Clean</string>
     <string name="save">Save</string>
     <string name="update">Update</string>
@@ -22,5 +22,6 @@
     <string name="yesterday">dünən</string>
     <string name="today">bugün</string>
     <string name="delete">delete</string>
-    <string name="identifier">Identifier</string>
+    <string name="identifier">Contact identifier</string>
+    <string name="cocktail_category">Select cocktail category</string>
 </resources>

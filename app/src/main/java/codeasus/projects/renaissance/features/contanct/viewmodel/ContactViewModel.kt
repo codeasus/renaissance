@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import codeasus.projects.renaissance.data.db.ContactDatabase
-import codeasus.projects.renaissance.data.entity.CHash
+import codeasus.projects.renaissance.data.entity.ContactHash
 import codeasus.projects.renaissance.data.entity.Contact
 import codeasus.projects.renaissance.data.relationship.TContactWithRawContacts
 import codeasus.projects.renaissance.data.repository.ContactRepository
@@ -24,21 +24,15 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         contactRepository = ContactRepository(contactDAO)
     }
 
-    fun insertCHashesInBulk(cHashes: List<CHash>) {
+    fun insertContactHashesInBulk(contactHashes: List<ContactHash>) {
         viewModelScope.launch(Dispatchers.IO) {
-            contactRepository.insertCHashesInBulk(cHashes)
+            contactRepository.insertContactHashesInBulk(contactHashes)
         }
     }
 
-    suspend fun extractCHashesFromLocalContacts(ctx: Context): List<CHash> {
+    suspend fun extractContactHashesFromLocalContacts(ctx: Context): List<ContactHelper.ContactHash> {
         return withContext(Dispatchers.IO) {
-            ContactHelper.extractCHashFromLocalContacts(ctx)
-        }
-    }
-
-    suspend fun getAllLocalContacts(ctx: Context): List<Contact> {
-        return withContext(Dispatchers.IO) {
-            ContactHelper.getAllContactsWithNumbers(ctx)
+            ContactHelper.getContactHashesFromLocalContacts(ctx)
         }
     }
 
@@ -48,21 +42,21 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    suspend fun getCHashesCount(): Long {
+    suspend fun getContactHashesCount(): Long {
         return withContext(Dispatchers.IO) {
-            contactRepository.getCHashesCount()
+            contactRepository.getContactHashesCount()
         }
     }
 
-    suspend fun getLocalContactsCount(ctx: Context): Long? {
+    suspend fun getLocalContactsCount(ctx: Context): Long {
         return withContext(Dispatchers.IO) {
             ContactHelper.getLocalContactsCount(ctx)
         }
     }
 
-    suspend fun readAllCHashes(): List<CHash> {
+    suspend fun readAllCHashes(): List<ContactHash> {
         return withContext(Dispatchers.IO) {
-            contactRepository.readAllCHashes()
+            contactRepository.readAllContactHashes()
         }
     }
 
@@ -84,7 +78,7 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun insertTContactsWithRawContacts(tContactsWithRawContacts: List<ContactHelper.TContact>) {
+    fun insertTContactsWithRawContacts(tContactsWithRawContacts: List<ContactHelper.BufferContact>) {
         viewModelScope.launch(Dispatchers.IO) {
             contactRepository.insertTContactWithRawContacts(tContactsWithRawContacts)
         }

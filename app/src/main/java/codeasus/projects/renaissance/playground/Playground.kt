@@ -1,13 +1,16 @@
 package codeasus.projects.renaissance.playground
 
+import android.util.Log
 import codeasus.projects.renaissance.data.entity.Contact
+import kotlinx.coroutines.*
 import java.util.*
 
-const val PLAIN_FIRST_NAMES =
+private const val PLAIN_FIRST_NAMES =
     "Marie Thomas Laura Nicolas Léa Julien Camille Maxime Chloé Quentin Manon Kevin Sarah Alexandre Emma Antoine Julie Alex Pauline Lucas Mathilde Clement Marine Romain Charlotte Pierre Lucie Florian Marion David Anaïs Guillaume Lisa Valentin Océane Paul Alice Jérémy Clara Hugo Justine Anthony Sophie Alexis Emilie Benjamin Morgane Theo Juliette Daniel Anna Adrien Mélanie Tom Louise Vincent Inès Mathieu Claire Simon Elodie Dylan Melissa Arthur Eva Nathan Margaux Jordan Amandine Louis Sara James Audrey Jonathan Elisa Leo Noémie Baptiste Julia Martin Caroline Axel Amélie Victor Clémence Corentin Jessica Jack Céline Thibault Maéva Samuel Emily Sebastien Jade Max Elise Marco Célia Adam Fanny Loïc Alexandra Robin Maria Ben Zoe Matthieu Margot Aurélien Aurélie William Estelle Gabriel Alicia Michael Léna Arnaud Romane Rémi Jeanne Damien Ophélie Raphael Hannah Enzo Andréa Ryan Olivia Bastien Lola Andrea Valentine Matteo Laurine Luca Victoria Tristan Nina Sam Laëtitia François Solène Marc Coralie Mickael Amy Dorian Megan Chris Aurore Charles Alexia Cédric Lauren Steven Lucy Liam Rébecca Benoit Cecile Mathis Marina Cyril Sandra Thibaut Agathe Christopher Emeline Maxence Laurie Florent Jennifer Jérôme Katie Gaëtan Ellie Francesco Elèna Christian Rachel Matthew Lou Fabien Elsa Yann Johanna John Sofia Adrian Chiara Tony Coline Mehdi Maëlle Jean Salomé Mohamed Carla Erwan"
-const val PLAIN_LAST_NAMES =
+private const val PLAIN_LAST_NAMES =
     "Smith Johnson Williams Jones Brown Davis Miller Wilson Moore Taylor Anderson Thomas Jackson White Harris Martin Thompson Garcia Martinez Robinson Clark Rodriguez Lewis Lee Walker Hall Allen Young Hernandez King Wright Lopez Hill Scott Green Adams Baker Gonzalez Nelson Carter Mitchell Perez Roberts Turner Phillips Campbell Parker Evans Edwards Collins Stewart Sanchez Morris Rogers Reed Cook Morgan Bell Murphy Bailey Rivera Cooper Richardson Cox Howard Ward Torres Peterson Gray Ramirez James Watson Brooks Kelly Sanders Price Bennett Wood Barnes Ross Henderson Coleman Jenkins Perry Powell Long Patterson Hughes Flores Washington Butler Simmons Foster Gonzales Bryant Alexander Russell Griffin Diaz Hayes"
 
+private val TAG = "Playground"
 fun getFirstNames(): Set<String> {
     return PLAIN_FIRST_NAMES.split(" ").toSet()
 }
@@ -38,4 +41,29 @@ fun main() {
 //    val c1 = Contact(0, "JNKN23324", "Orhan Rosenfeld", "+994558490252")
 //    val c2 = Contact(0, "JNKN23324", "Orhan Rosenfeld", "+994558490252")
 //    print(c1 == c2)
+    GlobalScope.launch(Dispatchers.IO) {
+        val sTime = System.currentTimeMillis()
+        val a = withContext(Dispatchers.IO) {
+            getLocalNumbers()
+        }
+        val b = withContext(Dispatchers.IO) {
+            getAppLocalNumbers()
+        }
+        Log.d(TAG, "PROCESS FINISHED IN: ${System.currentTimeMillis() - sTime}")
+    }
+}
+
+
+suspend fun getLocalNumbers(): List<Long> {
+    Log.i(TAG, "STARTED: getLocalNumbers()")
+    delay(3000)
+    Log.i(TAG, "COMPLETED: getLocalNumbers()")
+    return List(10) { it.toLong() }
+}
+
+suspend fun getAppLocalNumbers(): List<Long> {
+    Log.i(TAG, "STARTED: getAppLocalNumbers()")
+    delay(5000)
+    Log.i(TAG, "COMPLETED: getAppLocalNumbers()")
+    return List(10) { 5 * it.toLong() }
 }

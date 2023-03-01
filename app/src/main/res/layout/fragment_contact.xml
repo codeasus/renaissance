@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="6dp"
+    android:padding="12dp"
     tools:context=".MainActivity">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -12,8 +12,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="54dp"
-        android:layout_marginVertical="12dp"
+        android:layout_marginBottom="12dp"
         android:hint="@string/identifier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,22 +29,23 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_execute"
-        android:layout_width="150dp"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="12dp"
+        android:layout_marginBottom="12dp"
         android:text="@string/delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_identifier" />
+        app:layout_constraintTop_toBottomOf="@id/til_identifier"
+        app:layout_constraintBottom_toTopOf="@id/rv_contact"/>
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/rv_contact"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/btn_execute"-->
-<!--        tools:listitem="@layout/rv_item_contact" />-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_contact"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_execute"
+        tools:listitem="@layout/rv_item_contact" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

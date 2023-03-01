@@ -3,28 +3,38 @@ package codeasus.projects.renaissance.util
 import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract
+import android.util.Log
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import codeasus.projects.renaissance.data.entity.CHash
-import codeasus.projects.renaissance.data.entity.Contact
 import java.util.HashSet
 
 object ContactHelper {
 
-    private const val TAG = "CONTACT_HELPER"
+    private val TAG = ContactHelper::class.java.name
 
-    data class TContact(
+    data class ContactDetails(
+        val phoneNumber: String? = null,
+        val displayName: String? = null,
+        val rawID: Long? = null,
+        val lookupKey: String? = null
+    )
+
+    data class ContactHash(
+        val rawID: Long,
+        val lookupKey: String,
+        val lastUpdateTimestamp: Long?
+    )
+
+    data class BufferContact(
         val id: Long = 0,
         val rawID: Long = -1,
         val lookupKey: String? = null,
         val displayName: String? = null,
+        var phoneNumber: String? = null,
         val phoneNumbers: HashSet<String>
     )
 
-    fun getLocalContactsCount(ctx: Context): Long? {
+    fun getLocalContactsCount(ctx: Context): Long {
         val contentProvider = ContactsContract.Contacts.CONTENT_URI
         val projections = arrayOf(ContactsContract.Contacts.LOOKUP_KEY)
         val cursor = ctx.contentResolver.query(
@@ -37,11 +47,62 @@ object ContactHelper {
         cursor?.use {
             return it.count.toLong()
         }
-        return null
+        return 0
     }
 
-    fun getLocalContactsDetailed(ctx: Context): List<TContact> {
-        val contactSet: MutableList<TContact> = mutableListOf()
+    fun getLocalContactsWithPhoneNumbersA(ctx: Context): HashMap<String, ContactDetails> {
+        val results = hashMapOf<String, ContactDetails>()
+
+        val queryURI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+        val projections = arrayOf(
+            ContactsContract.CommonDataKinds.Phone.NUMBER,
+            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+            ContactsContract.CommonDataKinds.Phone._ID,
+            ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY
+        )
+
+        val cursor = ctx.contentResolver.query(
+            queryURI,
+            projections,
+            null,
+            null,
+            null
+        )
+
+        cursor?.use {
+            try {
+                val phoneNumberIndex =
+                    cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                val nameIndex =
+                    cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
+                val contactIDIndex =
+                    cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID)
+                val lookupKeyIndex =
+                    cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY)
+
+                while (cursor.moveToNext()) {
+                    val contactID = cursor.getLongOrNull(contactIDIndex)
+                    val lookupKey = cursor.getStringOrNull(lookupKeyIndex)
+                    val phoneNumber = cursor.getString(phoneNumberIndex)
+                    val displayName = cursor.getString(nameIndex)
+                    contactID?.let {
+                        val contactDetails =
+                            ContactDetails(phoneNumber, displayName, contactID, lookupKey)
+                        results.put(phoneNumber, contactDetails)
+                    }
+                }
+            } catch (e: SecurityException) {
+                Log.d(TAG, "Contact access security exception: $e")
+            }
+        }
+        return results
+    }
+
+    fun getLocalContactsWithPhoneNumbersB(
+        ctx: Context,
+        localNumber: String?
+    ): MutableList<BufferContact> {
+        val contactSet: MutableList<BufferContact> = mutableListOf()
 
         val contactContentProvider = ContactsContract.Contacts.CONTENT_URI
         val dataContentProvider = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
@@ -88,7 +149,7 @@ object ContactHelper {
 
                 if (rawID == null) return@use
 
-                val tempTC = TContact(
+                val tempTC = BufferContact(
                     id = id++,
                     rawID = rawID,
                     lookupKey = lookupKey,
@@ -105,8 +166,9 @@ object ContactHelper {
                 )
                 dataCur?.use { dCur ->
                     while (dCur.moveToNext()) {
-                        val numberColIdx = dCur.getColumnIndex(dataTableProjections[1])
-                        tempTC.phoneNumbers.add(dCur.getString(numberColIdx))
+                        val phoneNumberColIdx = dCur.getColumnIndex(dataTableProjections[1])
+                        val phoneNumber = dCur.getString(phoneNumberColIdx)
+                        tempTC.phoneNumbers.add(phoneNumber)
                     }
                 }
                 contactSet.add(tempTC)
@@ -115,67 +177,36 @@ object ContactHelper {
         return contactSet
     }
 
-    fun extractCHashFromLocalContacts(ctx: Context): List<CHash> {
-        val cHashList = mutableListOf<CHash>()
+    fun getContactHashesFromLocalContacts(ctx: Context): List<ContactHash> {
+        val contactHashList = mutableListOf<ContactHash>()
         val contentProvider = ContactsContract.Contacts.CONTENT_URI
-
+        val projections = arrayOf(
+            ContactsContract.Profile._ID,
+            ContactsContract.Profile.LOOKUP_KEY,
+            ContactsContract.Profile.CONTACT_LAST_UPDATED_TIMESTAMP
+        )
         val cursor = ctx.contentResolver.query(
             contentProvider,
-            null,
+            projections,
             null,
             null,
             null
         )
-        val lookUpKeyColumnIndex =
-            cursor?.getColumnIndex(ContactsContract.Profile.LOOKUP_KEY)!!
-        val idColumnIndex = cursor.getColumnIndex(ContactsContract.Profile._ID)
-        val lastUpdatedTimestampColumnIndex =
-            cursor.getColumnIndex(ContactsContract.Profile.CONTACT_LAST_UPDATED_TIMESTAMP)
-
-        cursor.use {
-            while (cursor.moveToNext()) {
-                val id = cursor.getLongOrNull(idColumnIndex)
-                val lookUpKey = cursor.getStringOrNull(lookUpKeyColumnIndex)
-                val lastUpdateTimestamp = cursor.getLongOrNull(lastUpdatedTimestampColumnIndex)
-                if (lookUpKey != null && id != null) {
-                    cHashList.add(CHash(lookUpKey, lastUpdateTimestamp))
-                }
-            }
-        }
-        return cHashList
-    }
-
-    fun getAllContactsWithNumbers(ctx: Context): List<Contact> {
-        val contactsList = mutableListOf<Contact>()
-        val queryUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-        val projections = arrayOf(
-            ContactsContract.CommonDataKinds.Phone.NUMBER,
-            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-            ContactsContract.CommonDataKinds.Phone._ID,
-            ContactsContract.CommonDataKinds.Photo.CONTACT_ID,
-            ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY
-        )
-
-        val cursor = ctx.contentResolver.query(queryUri, projections, null, null, null)
         cursor?.use {
-            while (it.moveToNext()) {
-                val phoneNumber = it.getStringOrNull(0)
-                if (phoneNumber.isNullOrEmpty().not()) {
-                    val displayName = it.getStringOrNull(1)
-                    val contactId =
-                        it.getLongOrNull(it.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone._ID))
-                    val lookUpKey =
-                        it.getStringOrNull(it.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY))
-                    contactId?.let { id ->
-                        val uri = ContactsContract.Contacts.getLookupUri(id, lookUpKey).toString()
-//                        contactsList.add(
-//                            Contact(id, uri, displayName, phoneNumber)
-//                        )
-                    }
+            val idColIdx = cursor.getColumnIndex(projections[0])
+            val lookUpKeyColIdx = cursor.getColumnIndex(projections[1])
+            val lastUpdatedTimestampColIdx = cursor.getColumnIndex(projections[2])
+
+            while (cursor.moveToNext()) {
+                val id = cursor.getLongOrNull(idColIdx)
+                val lookUpKey = cursor.getStringOrNull(lookUpKeyColIdx)
+                val lastUpdateTimestamp = cursor.getLongOrNull(lastUpdatedTimestampColIdx)
+                if (lookUpKey != null && id != null) {
+                    contactHashList.add(ContactHash(id, lookUpKey, lastUpdateTimestamp))
                 }
             }
         }
-        return contactsList
+        return contactHashList
     }
 
     fun getNameAndPhoneNumbersFromUri(ctx: Context, uri: Uri) {

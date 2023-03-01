@@ -15,34 +15,27 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.work.*
 import codeasus.projects.renaissance.R
-import codeasus.projects.renaissance.data.entity.RawContact
-import codeasus.projects.renaissance.data.entity.TContact
-import codeasus.projects.renaissance.data.relationship.TContactWithRawContacts
+import codeasus.projects.renaissance.data.entity.Contact
 import codeasus.projects.renaissance.databinding.FragmentContactBinding
 import codeasus.projects.renaissance.features.contanct.viewmodel.ContactViewModel
-import codeasus.projects.renaissance.util.ContactHelper
 import codeasus.projects.renaissance.workers.ContactSynchronizationWorker
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class ContactFragment : Fragment() {
 
     private lateinit var mBinding: FragmentContactBinding
+    private lateinit var mVM: ContactViewModel
     private lateinit var mNavController: NavController
     private lateinit var mMenuHost: MenuHost
-    private lateinit var mVM: ContactViewModel
     private lateinit var mRequestPermissionLauncher: ActivityResultLauncher<Array<String>>
 
     companion object {
         private val PERMISSIONS_CONTACTS =
             arrayOf(Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS)
-        private const val TAG = "ContactFragment"
+        private val TAG = Contact::class.java.name
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,9 +59,9 @@ class ContactFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         mBinding = FragmentContactBinding.inflate(layoutInflater)
+        mVM = ViewModelProvider(this)[ContactViewModel::class.java]
         mNavController = findNavController()
         mMenuHost = requireActivity()
-        mVM = ViewModelProvider(this)[ContactViewModel::class.java]
         setView()
         return mBinding.root
     }

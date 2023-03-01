@@ -7,10 +7,10 @@
     tools:context=".MainFragment">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_meal_fragment"
+        android:id="@+id/btn_cocktail_fragment"
         android:layout_width="196dp"
         android:layout_height="wrap_content"
-        android:text="@string/fragment_meal"
+        android:text="@string/fragment_cocktail"
         app:layout_constraintBottom_toTopOf="@id/btn_contact_fragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,6 +25,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_meal_fragment" />
+        app:layout_constraintTop_toBottomOf="@id/btn_cocktail_fragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

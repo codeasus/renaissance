@@ -6,12 +6,12 @@
     app:startDestination="@id/mainFragment">
 
     <fragment
-        android:id="@+id/mealFragment"
-        android:name="codeasus.projects.renaissance.features.meal.view.MealFragment"
-        android:label="Meals"
-        tools:layout="@layout/fragment_meal">
+        android:id="@+id/cocktailFragment"
+        android:name="codeasus.projects.renaissance.features.cocktail.view.CocktailFragment"
+        android:label="Cocktails"
+        tools:layout="@layout/fragment_cocktail">
         <action
-            android:id="@+id/mealFragmentToMainFragment"
+            android:id="@+id/cocktailFragmentToMainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
     <fragment
@@ -36,7 +36,7 @@
             app:destination="@id/contactFragment" />
         <action
             android:id="@+id/mainFragmentToMealFragment"
-            app:destination="@id/mealFragment" />
+            app:destination="@id/cocktailFragment" />
     </fragment>
     <fragment
         android:id="@+id/modifyContactFragment"
